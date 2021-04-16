@@ -1,6 +1,5 @@
 from behave import given, when, then, step
 from selenium import webdriver
-import unittest
 
 @given('chrome browser is launched')
 def launchBrowser(context):
