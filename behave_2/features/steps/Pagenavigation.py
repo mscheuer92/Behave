@@ -14,7 +14,7 @@ def openHomepage(context):
 
 @when('Find Program is clicked')
 def find_and_click(context):
-    context.driver.find_element_by_partial_link_text('Programs').click()
+    #context.driver.find_element_by_xpath("//body[@id='uni-home']/div[2]/section/div/ul/li[2]/a/span").click()
     #text = context.driver.find_element_by_partial_link_text('Program').is_present()
     #assert text is True
     #text.click()
