@@ -1,49 +1,44 @@
 from behave import given, when, then, step
 from selenium import webdriver
-
-
+from selenium.webdriver.support.wait import WebDriverWait
 
 @given('Chrome browser is launched')
-def launchBrowser(context):
+def initializeWebdriver(context):
     context.driver = webdriver.Chrome(executable_path="/home/michelle/Desktop/Selenium/Drivers/chromedriver_linux64/chromedriver")
 
-@when('ODU homepage is loaded')
-def openHomepage(context):
-    context.driver.get("https://www.odu.edu/")
-
-
-@when('Find Program is clicked')
-def find_and_click(context):
-    #context.driver.find_element_by_xpath("//body[@id='uni-home']/div[2]/section/div/ul/li[2]/a/span").click()
-    #text = context.driver.find_element_by_partial_link_text('Program').is_present()
-    #assert text is True
-    #text.click()
-
-@then('I validate that Computer Science & Math hyperlink is present')
-def validatePresence(context):
-    csmLink = context.driver.find_element_by_link_text("Computer Science & Math").is_present()
-    assert csmLink is True
-
-@then('I click on the hyper link')
-def clickCSM(context):
-    context.driver.find_element_by_link_text("Computer Science & Math").click()
-
-
-@then('I search for Computer Science')
-def searchCS(context):
-    CS = context.driver.find_element_by_link_text("Computer Science").is_present()
-    assert CS is True
+@when('Github is loaded')
+def launchBrowser(context):
+    context.driver.get("https://www.github.com")
     
+@when('I click on Sign in')
+def clickSignin(context):
+    context.driver.find_element_by_link_text('Sign in').click()
+    context.driver.implicitly_wait(20)
 
-@then('click on the hyperlink')
-def step_impl(context):
-    context.driver.find_element_by_link_text("Computer Science").click()
+@then('I am taken to the login page')
+def loginPage(context):
+    context.driver.implicitly_wait(20)
+    verify = context.driver.find_element_by_xpath("//div[@id='login']/div/h1").text
+    assert verify == "Sign in to GitHub"
 
+@then('I enter username "{user}" and password "{pwd}"')
+def enterCredentials(context, user, pwd):
+    context.driver.find_element_by_id("login_field").clear()
+    context.driver.find_element_by_id("login_field").send_keys(user)
+    context.driver.find_element_by_id("password").send_keys(pwd)
 
-@then('I will be on the Computer Science Program Page')
-def closeBrowser(context):
-    context.browser.close()
+@then('Click the login button')
+def clickLogin(context):
+    context.driver.find_element_by_name("commit").click()
+    context.driver.implicitly_wait(30)
 
-
-
-
+@then('I am shown a message saying "Incorrect username or password"')
+def verifyMessage(context):
+    context.driver.implicitly_wait(20)
+    verify = context.driver.find_element_by_xpath("//div[@id='js-flash-container']/div/div").text
+    assert verify == "Incorrect username or password."
+    if verify != "Incorrect username or password.":
+        print("The text you're looking for is not present on this page.")
+    context.driver.close()
+  
+  

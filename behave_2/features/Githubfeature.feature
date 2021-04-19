@@ -1,0 +1,12 @@
+#Author: Michelle Scheuer
+
+Feature: Github showing incorrect password with invalid password parameter
+	
+	Scenario: Failed login attempt to Github
+		Given Chrome browser is launched
+    When Github is loaded
+    And I click on Sign in
+    Then I am taken to the login page
+    And I enter username "mscheuer92" and password "fakepwd"
+    And Click the login button
+    Then I am shown a message saying "Incorrect username or password"
