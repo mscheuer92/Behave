@@ -18,15 +18,15 @@ Feature: Github showing incorrect password with invalid password parameter
     When Github is loaded
     And I click on Sign in
     Then I am taken to the login page
-   	And I enter username "<username>" and password "<password>"
-  	And Click the login button
-   	Then I am shown a message saying "Incorrect username or password"
+    And I enter username "<username>" and password "<password>"
+    And Click the login button
+    Then I am shown a message saying "Incorrect username or password"
    
     Examples:
    		| username   | password   |
    		| mscheuer   | fakep      |
    		| mscheuer92 | mscheuer92 |
-   		| lisa			 | smith		  |
+   		| lisa	     | smith      |
    		
    		
    	
